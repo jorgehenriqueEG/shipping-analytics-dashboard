@@ -48,10 +48,6 @@
 
 <script>
 let chart;
-
-// Simulação de dados (isso depois vem da planilha ou API)
-// Douglas preciso que voce possa  disponibilizar os dados de envios em um formato consumível ou voce faz (API REST, endpoint JSON, exportação automática para CSV/Google Sheets ou acesso direto ao banco). O painel vai consumir esse endpoint para gerar os gráficos em tempo real. Sem isso, a única alternativa é preenchimento manual ou scraping, que não é ideal.
-
 const dados = [
   { data: "2026-01-27", transportadora: "Correios", quantidade: 50 },
   { data: "2026-01-27", transportadora: "Jadlog", quantidade: 50 },
@@ -87,9 +83,9 @@ function carregar() {
   });
 }
 
-// Inicial
 carregar();
 </script>
 
 </body>
 </html>
+

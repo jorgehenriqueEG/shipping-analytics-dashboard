@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Envios</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+    }
+
+    select, button {
+      padding: 6px;
+      margin: 5px;
+    }
+
+    canvas {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Painel de Envios por Transportadora</h2>
+
+<div>
+  Tipo de gráfico:
+  <select id="tipo">
+    <option value="bar">Barras</option>
+    <option value="pie">Pizza</option>
+    <option value="line">Linha</option>
+  </select>
+
+  Data:
+  <input type="date" id="dataFiltro">
+
+  <button onclick="carregar()">Atualizar</button>
+</div>
+
+<canvas id="grafico" width="900" height="400"></canvas>
+
+<script>
+let chart;
+
+// Simulação de dados (isso depois vem da planilha ou API)
+// Douglas preciso que voce possa  disponibilizar os dados de envios em um formato consumível ou voce faz (API REST, endpoint JSON, exportação automática para CSV/Google Sheets ou acesso direto ao banco). O painel vai consumir esse endpoint para gerar os gráficos em tempo real. Sem isso, a única alternativa é preenchimento manual ou scraping, que não é ideal.
+
+const dados = [
+  { data: "2026-01-27", transportadora: "Correios", quantidade: 50 },
+  { data: "2026-01-27", transportadora: "Jadlog", quantidade: 50 },
+  { data: "2026-01-27", transportadora: "Total", quantidade: 50 },
+  { data: "2026-01-27", transportadora: "Rodonave", quantidade: 50 },
+
+  { data: "2026-01-26", transportadora: "Correios", quantidade: 50 },
+  { data: "2026-01-26", transportadora: "Jadlog", quantidade: 50 },
+];
+
+function carregar() {
+  const tipo = document.getElementById("tipo").value;
+  const dataFiltro = document.getElementById("dataFiltro").value;
+
+  const filtrado = dados.filter(d => 
+    !dataFiltro || d.data === dataFiltro
+  );
+
+  const labels = filtrado.map(d => d.transportadora);
+  const valores = filtrado.map(d => d.quantidade);
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(document.getElementById("grafico"), {
+    type: tipo,
+    data: {
+      labels,
+      datasets: [{
+        label: "Envios",
+        data: valores
+      }]
+    }
+  });
+}
+
+// Inicial
+carregar();
+</script>
+
+</body>
+</html>
